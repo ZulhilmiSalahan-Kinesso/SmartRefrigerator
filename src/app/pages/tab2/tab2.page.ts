@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PhotoService } from '../services/photo.service';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-tab2',
@@ -11,8 +11,10 @@ export class Tab2Page {
 
   constructor(public photoService: PhotoService) {  }
 
+  // tslint:disable:use-life-cycle-interface
   ngOnInit() {
     this.photoService.loadSaved();
   }
 
+// tslint:disable:eofline
 }

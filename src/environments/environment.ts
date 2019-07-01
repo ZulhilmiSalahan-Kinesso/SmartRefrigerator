@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+    firebase: {
+      apiKey: 'AIzaSyBOwW_qaEC9FKpCfQbucgFsfJvO2TAMKA4',
+      authDomain: 'smartrefrigerator-310cd.firebaseapp.com',
+      databaseURL: 'https://smartrefrigerator-310cd.firebaseio.com',
+      projectId: 'smartrefrigerator-310cd',
+      storageBucket: 'smartrefrigerator-310cd.appspot.com',
+      messagingSenderId: '141732146930',
+      appId: '1:141732146930:web:5449a9002f28260a'
+    }
 };
 
 /*

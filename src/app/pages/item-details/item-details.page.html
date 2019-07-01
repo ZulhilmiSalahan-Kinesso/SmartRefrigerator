@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ItemDetails</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-input required type="text" placeholder="Name" [(ngModel)]="item.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input required type="text" placeholder="Image" [(ngModel)]="item.image"></ion-input>
+    </ion-item>
+
+    <ion-grid>
+        <ion-row>
+        <ion-col col-2 *ngFor="let photo of photoService.photos">
+            <img [(ngModel)]="item.image" [src]="photo.data" />
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+    
+    <ion-button (click)="photoService.takePicture()">Take Photo</ion-button>
+    <ion-item>
+      <ion-datetime required placeholder="Expired Date" [(ngModel)]="item.expiredDate"></ion-datetime>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="full" (click)="saveItem()">Save</ion-button>
+</ion-content>

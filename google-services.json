@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "141732146930",
+    "firebase_url": "https://smartrefrigerator-310cd.firebaseio.com",
+    "project_id": "smartrefrigerator-310cd",
+    "storage_bucket": "smartrefrigerator-310cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141732146930:android:fb3f44659ff514ca",
+        "android_client_info": {
+          "package_name": "com.dynamictechies.smartrefrigerator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141732146930-47qhqcv06o1epikfjseefpjcg67bnsvn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8lSDZugYcgmK12CLAIZM2xsFu96oafWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141732146930-47qhqcv06o1epikfjseefpjcg67bnsvn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Items</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+  <ng-container *ngIf="!items || items.length == 0">
+    <div *ngFor="let n of [0,1,2]" padding>
+      <ion-skeleton-text></ion-skeleton-text>
+      <p>
+        <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
+      </p>
+    </div>
+  </ng-container>
+
+    <ion-card *ngFor="let item of items">
+      <ion-card-header button [routerLink]="['/item-details', item.id]">
+        <ion-card-subtitle>{{ item.createdAt | date:'short' }}</ion-card-subtitle>
+        <ion-card-title> {{ item.name }}</ion-card-title>  
+      </ion-card-header>
+      
+      <ion-card-content>
+        This item will expired at {{ item.expiredDate }}
+      </ion-card-content>
+
+      <ion-item>
+          <ion-button fill="outline" (click)="remove(item)" slot="end">Delete</ion-button>
+        </ion-item>
+    </ion-card>
+
+</ion-list>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button routerLink="/item-details" routerDirection="forward">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-content>
