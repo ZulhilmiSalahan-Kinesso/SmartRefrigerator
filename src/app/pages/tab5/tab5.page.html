@@ -5,9 +5,21 @@
 </ion-header>
 
 <ion-content padding>
+  <p>{{scheduleNotification}}</p>
+
+  <ion-button (click)="registerNotification()">
+    Register Notification
+    <ion-icon name="notifications"></ion-icon>
+  </ion-button>
+  <ion-button (click)="getScheduleNotofication()">
+    Get Registered Notification
+    <ion-icon name="notifications"></ion-icon>
+  </ion-button>
+  <ion-button (click)="localNotificationService.registerItemNotification()">Register All Notification</ion-button>
+
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="localNotificationService.scheduleSingleNotification()">
-      <ion-icon name="camera"></ion-icon>
+    <ion-fab-button (click)="callSingleNotification()">
+      <ion-icon name="notifications"></ion-icon>
     </ion-fab-button>
-</ion-fab>
+  </ion-fab>
 </ion-content>

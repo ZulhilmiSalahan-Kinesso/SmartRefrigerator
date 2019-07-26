@@ -7,11 +7,14 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 export class BarcodeScannerService {
 
   constructor(private barcodeScanner: BarcodeScanner) { }
-  openBarcodeScanner() {
+
+  async openBarcodeScanner() {
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
+      return barcodeData;
      }).catch(err => {
          console.log('Barcode Scanner Issue', err);
+         return err;
      });
   }
 }

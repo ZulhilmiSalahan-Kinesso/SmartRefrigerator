@@ -7,24 +7,31 @@
 <ion-content padding>
   <ion-list lines="full">
     <ion-item>
-      <ion-input required type="text" placeholder="Name" [(ngModel)]="item.name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input required type="text" placeholder="Image" [(ngModel)]="item.image"></ion-input>
+      <img [src]="item.image" *ngIf="photoService.photos.length == 0" />
+      <img [src]="photoService.photos[0].data" *ngIf="photoService.photos.length != 0" />
     </ion-item>
 
-    <ion-grid>
-        <ion-row>
-        <ion-col col-2 *ngFor="let photo of photoService.photos">
-            <img [(ngModel)]="item.image" [src]="photo.data" />
-            </ion-col>
-        </ion-row>
-      </ion-grid>
+    <ion-button expand="full" (click)="takePicture(item)">Take Photo</ion-button>
     
-    <ion-button (click)="photoService.takePicture()">Take Photo</ion-button>
     <ion-item>
-      <ion-datetime required placeholder="Expired Date" [(ngModel)]="item.expiredDate"></ion-datetime>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input required type="text" [(ngModel)]="item.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Barcode</ion-label>
+      <ion-input type="text" [(ngModel)]="item.barcode"></ion-input>
+    </ion-item>
+    
+    <ion-button expand="full" (click)="scanBarcode()">Scan Barcode</ion-button>
+  
+    <ion-item>
+      <ion-label position="stacked">Expired Date</ion-label>
+      <ion-datetime required displayFormat="MM DD YYYY" min="2019" max="2025" [(ngModel)]="item.expiredDate">
+      </ion-datetime>
     </ion-item>
   </ion-list>
+
+  <ion-button expand="full" (click)="triggerNotification()">Try Notification</ion-button>
   <ion-button expand="full" (click)="saveItem()">Save</ion-button>
 </ion-content>

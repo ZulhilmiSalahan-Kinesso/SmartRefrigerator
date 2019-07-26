@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button expand="full" (click)="triggerAllNotification()">
+    Test trigger all notification
+  </ion-button>
+
+  <ion-button expand="full" (click)="registerDeviceToken()">
+    Register Device Token
+  </ion-button>
+  
+  <ion-button expand="full" (click)="getDeviceToken()">
+    Get Device Token
+  </ion-button>
+
+  <ion-button expand="full" (click)="getDeviceTokenDirect()">
+    Get Device Token Direct
+  </ion-button>
+  
+  <ion-button expand="full" (click)="logout()">
+    LogOut
+    <ion-icon name="log-out"></ion-icon>
+  </ion-button>
+
+</ion-content>

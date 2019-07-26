@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Storage } from '@ionic/storage';
+import { Photo } from '../models/photo';
+import { Item } from '../models/item';
+import { ItemDetailsPage } from '../pages/item-details/item-details.page';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,7 @@ export class PhotoService {
 
   takePicture() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 5,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -31,7 +34,6 @@ export class PhotoService {
      // Handle error
      console.log('Camera issue: ' + err);
     });
-
   }
 
   loadSaved() {
@@ -39,9 +41,5 @@ export class PhotoService {
       this.photos = photos || [];
     });
   }
-
-}
-
-class Photo {
-  data: any;
+// tslint:disable-next-line:eofline
 }

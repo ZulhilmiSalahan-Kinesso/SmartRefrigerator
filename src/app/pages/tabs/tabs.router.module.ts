@@ -4,67 +4,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
-  {
-    path: 'tabs',
-    component: TabsPage,
-    children: [
-      {
-        path: 'tab1',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
-          }
-        ]
+  { path: '', component: TabsPage, children: [
+      { path: 'tab1', children: [
+          { path: '', loadChildren: '../settings/settings.module#SettingsPageModule' } ]
       },
-      {
-        path: 'tab2',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
-          }
-        ]
+      { path: 'tab2', children: [
+          { path: '', loadChildren: '../tab2/tab2.module#Tab2PageModule' } ]
       },
-      {
-        path: 'tab3',
-        children: [
-          {
-            path: '',
-            loadChildren: '../items/items.module#ItemsPageModule'
-          }
-        ]
+      { path: 'tab3', children: [
+          { path: '', loadChildren: '../items/items.module#ItemsPageModule' } ]
       },
-      {
-        path: 'tab4',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tab4/tab4.module#Tab4PageModule'
-          }
-        ]
+      { path: 'tab4', children: [
+          { path: '', loadChildren: '../profile/profile.module#ProfilePageModule' } ]
       },
-      {
-        path: 'tab5',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tab5/tab5.module#Tab5PageModule'
-          }
-        ]
+      { path: 'tab5', children: [
+          { path: '', loadChildren: '../tab5/tab5.module#Tab5PageModule' } ]
       },
-      {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
-    ]
+      { path: '', redirectTo: '/tabs/tab3', pathMatch: 'full' } ]
   },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
+  { path: '', redirectTo: '/tabs/tab3', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -11,7 +11,8 @@ export const environment = {
       projectId: 'smartrefrigerator-310cd',
       storageBucket: 'smartrefrigerator-310cd.appspot.com',
       messagingSenderId: '141732146930',
-      appId: '1:141732146930:web:5449a9002f28260a'
+      appId: '1:141732146930:web:5449a9002f28260a',
+      vapidKey: 'BHIBqSJ2dOYxzGSoZXDJ8G_SQOJn058OMXBcE-nYBOJfraxIzP_zSzskN6QSSsThxaoAHZiBsA7imSap_ZTSBFQ'
     }
 };
 

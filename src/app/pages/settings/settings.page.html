@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label position="stacked">Trigger Notification : Before Expired (Days)</ion-label>
+    <ion-input [(ngModel)]="setting.NotifyBefore" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Trigger Notification : Time</ion-label>
+    <ion-datetime [(ngModel)]="setting.NotifyTime" display-format="HH:mm"></ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="saveSettings()">
+    Save
+  </ion-button>
+</ion-content>
