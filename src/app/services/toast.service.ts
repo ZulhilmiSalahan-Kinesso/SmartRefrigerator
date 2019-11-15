@@ -11,18 +11,9 @@ export class ToastService {
   async presentToast(strMessage) {
     const toast = await this.toastController.create({
       message: strMessage,
-      duration: 2000,
+      duration: 3000,
       position: 'top'
     });
     toast.present();
   }
-
-  async presentToastWithOptions() {
-    const toast = await this.toastController.create({
-      message: 'Click to Close',
-      position: 'top'
-    });
-    toast.present();
-  }
-
 }

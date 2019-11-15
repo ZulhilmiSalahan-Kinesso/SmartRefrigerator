@@ -5,6 +5,24 @@
 </ion-header>
 
 <ion-content class="ion-no-padding ion-no-margin">
+
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9">
+          <ion-button expand="full" (click)="findItemByBarcode()">
+              <ion-icon name="barcode"></ion-icon> - Find Item By Barcode
+          </ion-button>     
+        </ion-col>
+        <ion-col size="3">
+          <ion-button expand="full" (click)="hideFilter()">
+            Clear
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
   <ion-list>
     <ng-container *ngIf="!items || items.length == 0">
       <div *ngFor="let n of [0,1]" padding>
@@ -16,7 +34,34 @@
     </ng-container>
   </ion-list>
 
-  <ion-grid class="ion-no-padding ion-no-margin">
+  <!-- Filter Items -->
+  <ion-grid class="ion-no-padding ion-no-margin" *ngIf="isFilterHidden == false">
+    <ion-row class="ion-no-padding ion-no-margin">
+      <ion-col class="ion-no-padding ion-no-margin" *ngFor="let item of barcodeItems" size="6">
+          <ion-card>
+              <img [src]="item.image" />
+              <ion-card-header button [routerLink]="['/item-details', item.id]">
+                
+                <ion-card-subtitle>{{ item.createdAt | date:'short' }}</ion-card-subtitle>
+                <ion-card-title> {{ item.name }}</ion-card-title>
+              </ion-card-header>
+        
+              <ion-card-content>
+                This item will expired at {{ item.expiredDate }}
+              </ion-card-content>
+        
+              <ion-item>
+                <ion-button fill="outline" (click)="remove(item)" slot="end">Delete</ion-button>
+              </ion-item>
+            </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  
+  <!-- User Items -->
+  <ion-grid class="ion-no-padding ion-no-margin" *ngIf="isFilterHidden == true">
     <ion-row class="ion-no-padding ion-no-margin">
       <ion-col class="ion-no-padding ion-no-margin" *ngFor="let item of items" size="6">
           <ion-card>

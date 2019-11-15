@@ -16,17 +16,21 @@ export class FirebaseService {
   public usersDocument: AngularFirestoreDocument<MyUser>;
   private items: Observable<Item[]>;
   private userId: string;
+  private barcodeItems: Observable<Item[]>;
 
   constructor(
-    private toastService: ToastService,
     private db: AngularFirestore,
     private auth: AuthService ) {
 
-    this.userId = auth.userDetails().uid;
+    this.userId = this.auth.userDetails().uid;
 
-    this.usersDocument = db.collection( 'users' ).doc<MyUser>(this.userId);
+    this.usersDocument = this.db.collection( 'users' ).doc<MyUser>(this.userId);
     this.itemsCollection = this.usersDocument.collection<Item>( 'items' );
 
+    this.getItemFromFirestore();
+  }
+
+  getItemFromFirestore() {
     this.items = this.itemsCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -39,6 +43,7 @@ export class FirebaseService {
   }
 
   getItems() {
+    this.getItemFromFirestore();
     return this.items;
   }
 
@@ -58,16 +63,6 @@ export class FirebaseService {
     return this.itemsCollection.doc(id).delete();
   }
 
-  listenItemCreated() {
-    this.items = this.itemsCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          this.toastService.presentToast(data);
-          return { id, ...data };
-        });
-      })
-    );
+  getItemByBarcode(barcode) {
   }
 }

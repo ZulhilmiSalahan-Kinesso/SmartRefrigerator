@@ -6,11 +6,14 @@ import { Item } from 'src/app/models/item';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Photo } from 'src/app/models/photo';
 import { ToastService } from 'src/app/services/toast.service';
-import { LocalNotificationService } from 'src/app/services/local-notification.service';
 import { MyNotification } from 'src/app/models/mynotification';
 import { BarcodeScannerService } from 'src/app/services/barcode-scanner.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ImagePickerService } from '../../services/image-picker.service';
+import { FcmService } from 'src/app/services/fcm.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { LocalNotificationService } from 'src/app/services/local-notification.service';
 
 @Component({
   selector: 'app-item-details',
@@ -25,18 +28,25 @@ export class ItemDetailsPage implements OnInit {
   public photo: Photo;
 
   constructor(private route: ActivatedRoute,
+    public domSanitizer: DomSanitizer,
     private nav: NavController,
     private itemService: FirebaseService,
+    private localNotification: LocalNotificationService,
     private loadingController: LoadingController,
+    private firebaseStorage: FirebaseStorageService,
     private photoService: PhotoService,
     private toastService: ToastService,
-    private localNotificationService: LocalNotificationService,
-    private barcodeScanner: BarcodeScanner) { }
+    private barcodeService: BarcodeScannerService,
+    private fcmService: FcmService) { }
+
+    categories: string[] = ['Fish and seafood', 'vegetable', 'dry food', 'meat', 'dairy food', 'grains/nut'];
 
     today: any;
     expiredDate: any;
+    imageSnapshot: any;
 
     item: Item = {
+      category: '',
       name: '',
       // tslint:disable-next-line: max-line-length
       image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAKBueIx4ZKCMgoy0qqC+8P//8Nzc8P//////////////////////////////////////////////////////////2wBDAaq0tPDS8P//////////////////////////////////////////////////////////////////////////////wAARCAeoD8ADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECA//EABUQAQEAAAAAAAAAAAAAAAAAAAAR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACoAoUAAAAAAAAAAABAAAAAAAAAAAFQBRAFEUAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQQVAAAAAAAAAAAAAAABQEUAQUAAAABAAAAAAAAFQAAAABRAFEUAEBUAAAAAAAAAAABUUBFQAAAAAABUAAAAAAAAAAAAAVAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFARQAAAQAAAAAAAAAAAAAAAAAAUEAAAAAAAAAAAAAAAAAAAAUQBQAQUEFAEAAAAAAAAAAAAVAURQAAAAAAAAQVAAAAAAAAABQAAAAAAAAAAAABFQAAAAAUARUBQAAAAAAAAAAAAAAQAABUAUEAUAAAAAAAAAAAAAAAEVAFRQAARQAAAAAAAAABQQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAUEAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAABUAUABFQAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAFEAUQBRAFEAVWQGhkoNIgCiAKIAogCoAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//2Q==',
@@ -46,11 +56,10 @@ export class ItemDetailsPage implements OnInit {
     };
 
     myNotification: MyNotification = {
-      id: 1,
-      text: '',
+      body: '',
       title: '',
       trigger: new Date(),
-      attachments: []
+      image: ''
     };
 
   ngOnInit() {
@@ -86,15 +95,32 @@ export class ItemDetailsPage implements OnInit {
 
     if (this.itemId) {
       this.itemService.updateItem(this.item, this.itemId).then(() => {
+
+        const notification = {
+          title: 'Item is updated',
+          body: this.item.name + ' is updated in the fridge',
+          image: this.item.image
+        };
+
+        this.fcmService.sendNotification(notification);
+
         this.toastService.presentToast('Your item is saved');
         loading.dismiss();
-        this.nav.goBack();
+        this.nav.back();
       });
     } else {
       this.itemService.addItem(this.item).then(() => {
+
+        const notification = {
+          title: 'New Item',
+          body: this.item.name + ' is added to the fridge',
+          image: this.item.image
+        };
+
+        this.fcmService.sendNotification(notification);
         this.toastService.presentToast('Your item is added');
         loading.dismiss();
-        this.nav.goBack();
+        this.nav.back();
       });
     }
   }
@@ -103,8 +129,19 @@ export class ItemDetailsPage implements OnInit {
     this.photoService.takePicture();
   }
 
+  /*
+  uploadToStorage() {
+    this.photoService.uploadToStorage();
+  }
+
+  getDownloadUrl() {
+    this.firebaseStorage.getDownloadUrl();
+  }
+  */
+
   scanBarcode() {
-    this.barcodeScanner.scan().then( res => {
+    this.barcodeService.openBarcodeScanner().then( res => {
+      this.toastService.presentToast(res.text);
       this.item.barcode = res.text;
     }).catch( err => {
       this.toastService.presentToast(err);
@@ -118,7 +155,12 @@ export class ItemDetailsPage implements OnInit {
     this.expiredDate = new Date(this.item.expiredDate);
     let numberOfDays = Math.round((this.expiredDate - this.today) / (1000 * 60 * 60 * 24));
     console.log(numberOfDays);
-    this.myNotification.text = 'This item will expired in ' + numberOfDays + ' days at ' + this.item.expiredDate;
-    this.localNotificationService.registerNotification(this.myNotification);
+    this.myNotification.body = 'This item will expired in ' + numberOfDays + ' days at ' + this.item.expiredDate;
+
+    // send notification to local device
+    this.localNotification.registerNotification(this.myNotification);
+
+    //send notification to all device
+    this.fcmService.sendNotification(this.myNotification);
   }
 }

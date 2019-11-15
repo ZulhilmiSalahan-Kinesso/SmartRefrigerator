@@ -1,7 +1,7 @@
 export class MyNotification {
-    id: number;
+    id?: number;
     title: string;
-    text: string;
-    attachments: string[];
-    trigger: Date;
+    body: string;
+    image: string;
+    trigger?: Date;
 }

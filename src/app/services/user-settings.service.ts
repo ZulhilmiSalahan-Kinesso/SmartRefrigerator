@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { MySetting } from '../models/mysetting';
 import { MyUser } from '../models/myuser';
 
 @Injectable({
@@ -19,9 +16,9 @@ export class UserSettingsService {
     private db: AngularFirestore,
     private auth: AuthService) {
 
-    this.userId = auth.userDetails().uid;
+    this.userId = this.auth.userDetails().uid;
 
-    this.MyUsers = db.collection( 'users' );
+    this.MyUsers = this.db.collection( 'users' );
     this.MySettings = this.MyUsers.doc<MyUser>(this.userId);
   }
 

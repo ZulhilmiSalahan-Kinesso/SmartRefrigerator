@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavController, LoadingController } from '@ionic/angular';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { NavController } from '@ionic/angular';
 import { Item } from 'src/app/models/item';
 import { Observable } from 'rxjs';
 import { FcmService } from './../../services/fcm.service';
-import { ToastService } from './../../services/toast.service';
-import { DeviceService } from './../../services/device.service';
-import { AngularFireMessaging } from '@angular/fire/messaging';
-import { mergeMapTo } from 'rxjs/operators';
-import * as firebase from 'firebase';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,55 +15,49 @@ import * as firebase from 'firebase';
 export class ProfilePage implements OnInit {
   item: Observable<Item[]>;
   token: Observable<String>;
+  cameraInfo: any;
+
   constructor(
     private auth: AuthService,
     private toastService: ToastService,
+    private firebaseStorage: FirebaseStorageService,
     public fcm: FcmService,
-    private afMessaging: AngularFireMessaging,
-    private deviceService: DeviceService,
-    private itemService: FirebaseService,
-    private loadingController: LoadingController,
     private navCtrl: NavController) { }
 
   ngOnInit() {
-    this.token = this.afMessaging.getToken;
-    this.token = this.afMessaging.tokenChanges;
-  }
-
-  registerDeviceToken() {
-    this.deviceService.registerDeviceToken();
   }
 
   getDeviceToken() {
     this.fcm.getToken();
   }
 
-  getDeviceTokenDirect() {
-    this.afMessaging.requestToken
-      .subscribe(
-        (token) => {
-          console.log('Permission granted! Save to the server!', token);
-          this.toastService.presentToast(token);
-      },
-        (error) => { console.error(error); },
-      );
+  uploadToStorage() {
+    this.firebaseStorage.uploadBlobToStorage(this.cameraInfo);
   }
 
-  async triggerAllNotification() {
-    const loading = await this.loadingController.create({
-      message: 'Get Item..'
-    });
-    loading.present();
-    console.log('trigger all notification');
-    loading.dismiss();
+  takePicture() {
+    this.cameraInfo = this.firebaseStorage.pickImage();
+  }
+
+  getDownloadUrl() {
+    this.firebaseStorage.getDownloadUrl();
+  }
+
+  sendNotification(){
+    const notification = {
+      title: 'Item Expired',
+      body: 'Your item is going to expired in 2 days',
+      image: 'https://www.maggi.com.my/sites/default/files/ketupat-a.jpg'
+    };
+
+    this.fcm.sendNotification(notification);
   }
 
   logout() {
     this.auth.logoutUser().then(res => {
-      console.log(res);
       this.navCtrl.navigateBack('');
     }, err => {
-      console.log(err);
+      this.toastService.presentToast(err);
     });
   }
 }

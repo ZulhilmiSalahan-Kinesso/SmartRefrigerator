@@ -15,6 +15,7 @@
   "dependencies": {
     "@angular/cdk": "^8.1.0",
     "@angular/common": "~7.1.4",
+    "@angular/compiler-cli": "^7.1.4",
     "@angular/core": "~7.1.4",
     "@angular/fire": "^5.2.1",
     "@angular/forms": "^7.1.4",
@@ -23,19 +24,21 @@
     "@angular/platform-browser-dynamic": "~7.1.4",
     "@angular/router": "~7.1.4",
     "@google-cloud/vision": "^1.1.3",
-    "@ionic-native/barcode-scanner": "^5.10.0",
+    "@ionic-native/barcode-scanner": "^5.11.0",
     "@ionic-native/camera": "^5.0.0-beta.23",
     "@ionic-native/core": "5.0.0-beta.21",
+    "@ionic-native/file": "^5.10.0",
     "@ionic-native/firebase": "^5.10.0",
     "@ionic-native/image-picker": "^5.9.0",
+    "@ionic-native/ionic-webview": "^5.10.0",
     "@ionic-native/local-notifications": "^5.9.0",
     "@ionic-native/splash-screen": "5.0.0-beta.21",
     "@ionic-native/status-bar": "5.0.0-beta.21",
-    "@ionic/angular": "^4.0.0-rc.2",
+    "@ionic/angular": "^4.11.3",
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "^2.2.0",
     "angularfire2": "^5.2.1",
-    "cordova-android": "^8.0.0",
+    "cordova-android": "8.1.0",
     "cordova-common": "^3.2.0",
     "cordova-fabric-plugin": "^1.1.14-dev",
     "cordova-plugin-androidx": "^1.0.2",
@@ -43,6 +46,8 @@
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-camera": "~4.0.3",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-firebase": "^2.0.5",
     "cordova-plugin-firebasex": "^6.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^2.3.1",
@@ -57,6 +62,7 @@
     "elementtree": "^0.1.7",
     "firebase": "^6.3.1",
     "material-design-icons": "^3.0.1",
+    "npm": "^6.12.1",
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "properties-parser": "^0.3.1",
     "rxjs": "^6.3.3",
@@ -67,9 +73,8 @@
     "@angular-devkit/build-angular": "^0.12.1",
     "@angular-devkit/core": "~7.1.4",
     "@angular-devkit/schematics": "~7.1.4",
-    "@angular/cli": "~7.1.4",
-    "@angular/compiler": "~7.1.4",
-    "@angular/compiler-cli": "~7.1.4",
+    "@angular/cli": "^7.1.4",
+    "@angular/compiler": "^7.1.4",
     "@angular/language-service": "~7.1.4",
     "@ionic/angular-toolkit": "~1.2.0",
     "@types/jasmine": "~2.8.8",
@@ -78,7 +83,7 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.1.4",
+    "karma": "^4.2.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
@@ -96,9 +101,7 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      },
+      "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-sqlite-storage": {},
       "cordova-fabric-plugin": {
@@ -106,9 +109,23 @@
         "FABRIC_API_SECRET": "21ae9dd8ba1602ea665dea0193e0fd5483ddb03fe15609b73f8a9a094018a340"
       },
       "cordova-plugin-local-notification": {},
-      "phonegap-plugin-barcodescanner": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-telerik-imagepicker": {},
-      "cordova-plugin-firebasex": {}
+      "cordova-plugin-firebasex": {
+        "ANDROID_ICON_ACCENT": "#FF00FFFF",
+        "ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION": "17.0.0",
+        "ANDROID_FIREBASE_CORE_VERSION": "17.0.0",
+        "ANDROID_FIREBASE_MESSAGING_VERSION": "19.0.0",
+        "ANDROID_FIREBASE_CONFIG_VERSION": "18.0.0",
+        "ANDROID_FIREBASE_PERF_VERSION": "18.0.0",
+        "ANDROID_FIREBASE_AUTH_VERSION": "18.0.0",
+        "ANDROID_CRASHLYTICS_VERSION": "2.10.1",
+        "ANDROID_CRASHLYTICS_NDK_VERSION": "2.1.0",
+        "ANDROID_SHORTCUTBADGER_VERSION": "1.1.22"
+      },
+      "cordova-plugin-file": {}
     },
     "platforms": []
   }

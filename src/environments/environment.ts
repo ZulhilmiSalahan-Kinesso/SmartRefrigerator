@@ -12,7 +12,8 @@ export const environment = {
       storageBucket: 'smartrefrigerator-310cd.appspot.com',
       messagingSenderId: '141732146930',
       appId: '1:141732146930:web:5449a9002f28260a',
-      vapidKey: 'BHIBqSJ2dOYxzGSoZXDJ8G_SQOJn058OMXBcE-nYBOJfraxIzP_zSzskN6QSSsThxaoAHZiBsA7imSap_ZTSBFQ'
+      vapidKey: 'BHIBqSJ2dOYxzGSoZXDJ8G_SQOJn058OMXBcE-nYBOJfraxIzP_zSzskN6QSSsThxaoAHZiBsA7imSap_ZTSBFQ',
+      functionUrl: 'https://us-central1-smartrefrigerator-310cd.cloudfunctions.net'
     }
 };
 

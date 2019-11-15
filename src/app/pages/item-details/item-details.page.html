@@ -13,6 +13,14 @@
 
     <ion-button expand="full" (click)="takePicture(item)">Take Photo</ion-button>
     
+
+    <ion-item>
+      <ion-label position="stacked">Category</ion-label>
+      <ion-select required multiple="false" placeholder="Select Category" [(ngModel)]="item.category">
+        <ion-select-option *ngFor="let category of categories" value="{category}">{{category}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
       <ion-input required type="text" [(ngModel)]="item.name"></ion-input>

@@ -17,9 +17,6 @@ const routes: Routes = [
       { path: 'tab4', children: [
           { path: '', loadChildren: '../profile/profile.module#ProfilePageModule' } ]
       },
-      { path: 'tab5', children: [
-          { path: '', loadChildren: '../tab5/tab5.module#Tab5PageModule' } ]
-      },
       { path: '', redirectTo: '/tabs/tab3', pathMatch: 'full' } ]
   },
   { path: '', redirectTo: '/tabs/tab3', pathMatch: 'full' }

@@ -38,8 +38,8 @@ export class LocalNotificationService {
     this.localNotifications.schedule({
       id: notification.id,
       title: notification.title,
-      text: notification.text
-      //trigger: {at: notification.trigger}
+      text: notification.body,
+      trigger: {at: notification.trigger}
     });
   }
 
